@@ -1,0 +1,69 @@
+## 🧠 TD : Implémentation du Lambda-Calcul en OCaml
+
+### 📝 Objectif :
+Programmer un interpréteur minimal du lambda-calcul non typé en OCaml. Vous manipulerez des expressions, ferez des substitutions, et évaluerez des termes selon les règles du lambda-calcul.
+
+---
+
+### 🔧 Partie 1 : Représentation des termes
+
+1. **Définissez un type pour représenter les termes du lambda-calcul.**
+   - Réfléchissez aux trois formes possibles d’un terme.
+   - Donnez des noms clairs à vos constructeurs.
+
+2. **Ajoutez une fonction `string_of_term : term -> string`**
+   - Elle doit convertir une expression en une chaîne lisible, avec les parenthèses nécessaires.
+   - Pensez à bien gérer la priorité des opérateurs (application vs abstraction).
+
+---
+
+### ⚙️ Partie 2 : Substitution
+
+3. **Implémentez une fonction de substitution `subst : string -> term -> term -> term`**
+   - Elle remplace toutes les occurrences d’une variable par un autre terme.
+   - Attention au *capture d’identifiant* : comment éviter d’écraser une variable libre ?
+   - Vous pourriez avoir besoin d’une fonction auxiliaire pour renommer les variables (alpha-conversion).
+
+---
+
+### 🔁 Partie 3 : Réduction (β-reduction)
+
+4. **Implémentez une fonction `reduce_once : term -> term option`**
+   - Elle effectue une seule réduction β si c’est possible.
+   - Travaillez en priorité sur les termes les plus à gauche (ordre normal).
+
+5. **Implémentez une fonction `normalize : term -> term`**
+   - Elle applique `reduce_once` autant de fois que nécessaire jusqu’à obtenir un terme normal.
+   - Attention aux boucles infinies ! (optionnel : ajoutez une limite de profondeur).
+
+---
+
+### 🧪 Partie 4 : Tests & Termes utiles
+
+6. **Implémentez quelques termes classiques du lambda-calcul :**
+   - Identité : `λx. x`
+   - Combinateur K : `λx. λy. x`
+   - Combinateur S : `λx. λy. λz. x z (y z)`
+   - Les booléens : `true = λt. λf. t`, `false = λt. λf. f`
+   - Les entiers de Church : `0 = λf. λx. x`, `1 = λf. λx. f x`, etc.
+
+7. **Testez quelques expressions et réductions :**
+   - `((λx. x) y)` → `y`
+   - `((λx. λy. x) a) b` → `a`
+   - `((λf. λx. f (f x)) (λy. y + 1)) 0` → ?
+
+---
+
+### 🧠 Partie 5 : Bonus (si tu veux aller plus loin)
+
+8. **Implémente une gestion des entrées utilisateur :**
+   - Un mini-parceur de chaînes vers des termes (ex : `"\\x. x x"` → `Lam ("x", App (Var "x", Var "x"))`).
+
+9. **Ajoute une gestion des erreurs :**
+   - Par exemple, une exception pour les variables libres non définies.
+
+10. **Explore des extensions :**
+   - Ajoute des types simples (calcul des types de Church).
+   - Gère les macros ou la récursion via le combinateur Y.
+
+---
